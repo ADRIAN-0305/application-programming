@@ -1,0 +1,78 @@
+using System;
+
+class Book
+{
+    public string Code { get; set; }
+    public string Name { get; set; }
+
+    // Constructor to initialize book details
+    public Book(string code, string name)
+    {
+        Code = code;
+        Name = name;
+    }
+}
+
+class Library
+{
+    private Book[] books;
+    private int bookCount;
+
+    // Constructor to initialize the library with a maximum capacity
+    public Library(int capacity)
+    {
+        books = new Book[capacity];
+        bookCount = 0;
+    }
+
+    // Method to add a book to the library
+    public void AddBook(string code, string name)
+    {
+        if (bookCount < books.Length)
+        {
+            books[bookCount] = new Book(code, name);
+            bookCount++;
+        }
+        else
+        {
+            Console.WriteLine("Library is full. Cannot add more books.");
+        }
+    }
+
+    // Method to display all books in the library
+    public void DisplayBooks()
+    {
+        Console.WriteLine("Books in the Library:");
+        for (int i = 0; i < bookCount; i++)
+        {
+            Console.WriteLine($"Code: {books[i].Code}, Name: {books[i].Name}");
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter the number of books the library can hold:");
+        int capacity = Convert.ToInt32(Console.ReadLine());
+
+        Library library = new Library(capacity);
+
+        // Allow the librarian to add books
+        for (int i = 0; i < capacity; i++)
+        {
+            Console.WriteLine($"Enter details for book {i + 1}:");
+            Console.Write("Enter book code: ");
+            string code = Console.ReadLine() ?? string.Empty;
+
+            Console.Write("Enter book name: ");
+            string name = Console.ReadLine() ?? string.Empty;
+
+            library.AddBook(code, name);
+        }
+
+        // Display all books in the library
+        library.DisplayBooks();
+    }
+}
