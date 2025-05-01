@@ -62,5 +62,6 @@ class Program
 
         // Calculate and display profit or loss
         business.CalculateProfitOrLoss();
+
     }
 }
