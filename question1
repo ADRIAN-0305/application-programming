@@ -1,0 +1,61 @@
+using System;
+
+class Business
+{
+    private double buyingPrice;
+    private double transportCost;
+    private double sellingPrice;
+
+    public Business()
+    {
+        buyingPrice = 0;
+        transportCost = 0;
+        sellingPrice = 0;
+    }
+
+    public Business(double buyingPrice, double transportCost, double sellingPrice)
+    {
+        this.buyingPrice = buyingPrice;
+        this.transportCost = transportCost;
+        this.sellingPrice = sellingPrice;
+    }
+
+    // Method for calculating profit or loss
+    public void CalculateProfitOrLoss()
+    {
+        double totalCost = buyingPrice + transportCost;
+        double result = sellingPrice - totalCost;
+
+        if (result > 0)
+        {
+            Console.WriteLine($"Profit made: {result:C}");
+        }
+        else if (result < 0)
+        {
+            Console.WriteLine($"Loss incurred: {Math.Abs(result):C}");
+        }
+        else
+        {
+            Console.WriteLine("No profit, no loss.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter buying price:");
+        double buyingPrice = Convert.ToDouble(Console.ReadLine());
+
+        Console.WriteLine("Enter transport cost:");
+        double transportCost = Convert.ToDouble(Console.ReadLine());
+
+        Console.WriteLine("Enter selling price:");
+        double sellingPrice = Convert.ToDouble(Console.ReadLine());
+
+        Business business = new Business(buyingPrice, transportCost, sellingPrice);
+
+        business.CalculateProfitOrLoss();
+    }
+}
