@@ -1,0 +1,43 @@
+using System;
+
+class Book
+{
+    public string Code { get; set; }
+    public string Name { get; set; }
+}
+
+class Library
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Enter the number of books to store: ");
+        int numberOfBooks = int.Parse(Console.ReadLine());
+
+        Book[] books = new Book[numberOfBooks];
+
+        // Input book details
+        for (int i = 0; i < numberOfBooks; i++)
+        {
+            books[i] = new Book();
+
+            Console.WriteLine($"\nEnter details for Book {i + 1}:");
+
+            Console.Write("Enter Book Code: ");
+            books[i].Code = Console.ReadLine();
+
+            Console.Write("Enter Book Name: ");
+            books[i].Name = Console.ReadLine();
+        }
+
+        // Display book details
+        Console.WriteLine("\nBooks in the Library:");
+        Console.WriteLine("----------------------");
+        for (int i = 0; i < numberOfBooks; i++)
+        {
+            Console.WriteLine($"Book {i + 1}: Code = {books[i].Code}, Name = {books[i].Name}");
+        }
+
+        Console.WriteLine("\nPress any key to exit...");
+        Console.ReadKey();
+    }
+}
