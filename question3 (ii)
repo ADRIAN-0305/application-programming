@@ -88,24 +88,93 @@ public class CurrentAccount : Account
     }
 }
 
-// Example usage
+// Main Program
 public class Program
 {
-    public static void Main(string[] args)
+    public static void Main()
     {
-        SavingsAccount savings = new SavingsAccount("SA123", "Alice", 1000, 5);
-        CurrentAccount current = new CurrentAccount("CA456", "Bob", 500, 200);
+        Console.WriteLine("Welcome to the Bank System!");
+        Console.WriteLine("Choose account type:\n1. Savings Account\n2. Current Account");
+        Console.Write("Enter your choice (1 or 2): ");
+        string choice = Console.ReadLine();
 
-        savings.CheckBalance();
-        savings.Deposit(200);
-        savings.Withdraw(300);
-        savings.ApplyInterest();
+        Console.Write("Enter Account Number: ");
+        string accNum = Console.ReadLine();
 
-        Console.WriteLine();
+        Console.Write("Enter Account Holder Name: ");
+        string name = Console.ReadLine();
 
-        current.CheckBalance();
-        current.Deposit(100);
-        current.Withdraw(700);  // Allowed because of overdraft
-        current.Withdraw(100);  // Exceeds overdraft
+        Console.Write("Enter Initial Balance: ");
+        double balance = double.Parse(Console.ReadLine());
+
+        Account account = null;
+
+        if (choice == "1")
+        {
+            Console.Write("Enter Interest Rate (%): ");
+            double interestRate = double.Parse(Console.ReadLine());
+            account = new SavingsAccount(accNum, name, balance, interestRate);
+        }
+        else if (choice == "2")
+        {
+            Console.Write("Enter Overdraft Limit: ");
+            double overdraft = double.Parse(Console.ReadLine());
+            account = new CurrentAccount(accNum, name, balance, overdraft);
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice. Exiting...");
+            return;
+        }
+
+        string action = "";
+        do
+        {
+            Console.WriteLine("\nChoose an action:");
+            Console.WriteLine("1. Deposit");
+            Console.WriteLine("2. Withdraw");
+            Console.WriteLine("3. Check Balance");
+            if (account is SavingsAccount) Console.WriteLine("4. Apply Interest");
+            Console.WriteLine("0. Exit");
+            Console.Write("Enter your choice: ");
+            action = Console.ReadLine();
+
+            switch (action)
+            {
+                case "1":
+                    Console.Write("Enter amount to deposit: ");
+                    double dep = double.Parse(Console.ReadLine());
+                    account.Deposit(dep);
+                    break;
+
+                case "2":
+                    Console.Write("Enter amount to withdraw: ");
+                    double with = double.Parse(Console.ReadLine());
+                    account.Withdraw(with);
+                    break;
+
+                case "3":
+                    account.CheckBalance();
+                    break;
+
+                case "4":
+                    if (account is SavingsAccount sa)
+                        sa.ApplyInterest();
+                    else
+                        Console.WriteLine("Invalid option for current account.");
+                    break;
+
+                case "0":
+                    Console.WriteLine("Exiting program. Thank you!");
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
+            }
+
+        } while (action != "0");
     }
-}
+  
+        
+        
